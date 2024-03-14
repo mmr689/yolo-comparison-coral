@@ -1,11 +1,14 @@
 """
-Código RPi modelos FP32 y FP16
+Código Coral
 """
-
-from tflite_runtime.interpreter import Interpreter
+from periphery import GPIO
+from tflite_runtime.interpreter import Interpreter, load_delegate
 import os
 import cv2
 import numpy as np
+
+gpio = GPIO("/dev/gpiochip2", 13, "out")
+gpio.write(False)
 
 def calcular_solapamiento(rect1, rect2):
     x1_1, y1_1, x2_1, y2_1, confianza1 = rect1
@@ -42,8 +45,8 @@ def eliminar_solapamientos(lista_rectangulos):
 
 
 project = 'Bioview'
-model_name = 'yolov3-tinyu_float32'
-model_ext = '.tflite'
+model_name = 'yolov3-tinyu'
+model_name += '_full_integer_quant_edgetpu.tflite'
 
 
 
@@ -58,10 +61,12 @@ frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
 
 # Ruta al modelo TFLite
-model_path = os.path.join("models", project, model_name+model_ext)
-interpreter = Interpreter(model_path=model_path)
+gpio.write(True)
+model_path = os.path.join("models", project, model_name)
+interpreter = Interpreter(model_path,
+  experimental_delegates=[load_delegate('libedgetpu.so.1')])
 interpreter.allocate_tensors()
-# print(interpreter)
+gpio.write(False)
 
 # Get model details
 input_details = interpreter.get_input_details()
@@ -71,15 +76,17 @@ _, height, width, _ = input_details[0]['shape']
 
 frame_resized = cv2.resize(frame_rgb, (width, height))
 # Normalizar los valores de píxeles a FLOAT32
-input_data = frame_resized.astype(np.float32) / 255.0
+input_data = frame_resized.astype(np.int8)
 # Agregar una dimensión para representar el lote (batch)
 input_data = np.expand_dims(input_data, axis=0)
 
 
 # Perform the actual detection by running the model with the image as input
+gpio.write(True)
 interpreter.set_tensor(input_details[0]['index'],input_data)
 interpreter.invoke()
 output_data = interpreter.get_tensor(output_details[0]['index'])
+gpio.write(False)
 
 # 
 bb_dict = {}
@@ -136,3 +143,4 @@ for key,vals in bb_dict.items():
 # Guardar la imagen resultante con rectángulos dibujados
 output_path = f'results/{project}/{img_name}-{model_name}.jpg'
 cv2.imwrite(output_path, frame)
+gpio.close()
