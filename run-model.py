@@ -46,7 +46,7 @@ def eliminar_solapamientos(lista_rectangulos):
 
 
 project = 'COCO'
-model_name = 'yolov3-tinyu'
+model_name = 'yolov8n'
 model_name += '_full_integer_quant_edgetpu.tflite'
 
 
