@@ -6,6 +6,7 @@ from tflite_runtime.interpreter import Interpreter, load_delegate
 import os
 import cv2
 import numpy as np
+import time
 
 gpio = GPIO("/dev/gpiochip2", 13, "out")
 gpio.write(False)
@@ -83,10 +84,12 @@ input_data = np.expand_dims(input_data, axis=0)
 
 # Perform the actual detection by running the model with the image as input
 gpio.write(True)
+start_time = time.time()
 interpreter.set_tensor(input_details[0]['index'],input_data)
 interpreter.invoke()
 output_data = interpreter.get_tensor(output_details[0]['index'])
 gpio.write(False)
+end_time = time.time()
 
 # 
 bb_dict = {}
@@ -144,3 +147,7 @@ for key,vals in bb_dict.items():
 output_path = f'results/{project}/{img_name}-{model_name}.jpg'
 cv2.imwrite(output_path, frame)
 gpio.close()
+
+# Calcula el tiempo transcurrido
+elapsed_time = end_time - start_time
+print("Tiempo transcurrido:", elapsed_time, "segundos")
