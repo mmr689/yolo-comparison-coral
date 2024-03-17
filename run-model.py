@@ -160,9 +160,9 @@ for key,vals in bb_dict.items():
         if key == 0: color = (0,255,0)
         elif key == 5: color = (0,0,255)
         else: color = (255,0,0)
-        print(key, (x1, y1), (x2, y2))
 
         x1, y1, x2, y2, conf = rectangulo
+        print(key, x1, y1, x2, y2, conf)
         cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
         cv2.putText(frame, str(round(conf, 1)), (int(x1), int(y1 - 10)),
                     cv2.FONT_HERSHEY_SIMPLEX, 1.3, color, 1, cv2.LINE_AA)
