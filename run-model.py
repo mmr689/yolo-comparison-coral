@@ -104,6 +104,10 @@ interpreter.invoke()
 output_data = interpreter.get_tensor(output_details[0]['index'])
 gpio.write(False)
 end_time = time.time()
+print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
+print('output_data')
+print(output_data)
+print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 
 # 
 bb_dict = {}
