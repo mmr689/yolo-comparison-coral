@@ -120,7 +120,7 @@ for i in range(output_details[0]['shape'][2]):
     probs = output_data[0][4:, i].flatten() # CONF LABELS
     if np.max(probs) > 0.25:
         x, y, w, h = output_data[0][:4, i].flatten() # COORDS
-        # print(i, np.max(probs), np.argmax(probs), (x, y, w, h))
+        print(i, np.max(probs), np.argmax(probs), (x, y, w, h))
 
         # Coordenadas del punto (ejemplo)
         x = int(x * frame.shape[1])
