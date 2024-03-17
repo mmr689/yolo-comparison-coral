@@ -123,12 +123,12 @@ for i in range(output_details[0]['shape'][2]):
         print(i, np.max(probs), np.argmax(probs), (x, y, w, h))
 
         # Coordenadas del punto (ejemplo)
-        x = int(x * frame.shape[1])
-        y = int(y * frame.shape[0])
+        x = int(x * frame_resized.shape[1])
+        y = int(y * frame_resized.shape[0])
 
         # Dimensiones del rectángulo
-        width = int(w * frame.shape[1])
-        height = int(h * frame.shape[0])
+        width = int(w * frame_resized.shape[1])
+        height = int(h * frame_resized.shape[0])
 
         # Calcular las coordenadas del vértice superior izquierdo del rectángulo
         x_izquierda = x - width // 2
