@@ -77,6 +77,12 @@ gpio.write(False)
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 _, height, width, _ = input_details[0]['shape']
+print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
+print('input')
+print(input_details)
+print('output')
+print(output_details)
+print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 
 
 frame_resized = cv2.resize(frame_rgb, (width, height))
