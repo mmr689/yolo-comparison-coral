@@ -167,6 +167,7 @@ for key,vals in bb_dict.items():
                     cv2.FONT_HERSHEY_SIMPLEX, 1.3, color, 1, cv2.LINE_AA)
 
 # Guardar la imagen resultante con rectángulos dibujados
+print(rectangulos_eliminados)
 output_path = f'results/{project}/{img_name}-{model_name}.jpg'
 cv2.imwrite(output_path, frame)
 gpio.close()
