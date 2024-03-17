@@ -87,8 +87,7 @@ print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 
 frame_resized = cv2.resize(frame_rgb, (width, height))
 # Normalizar los valores de píxeles a FLOAT32
-# input_data = frame_resized.astype(np.int8)
-input_data = frame_resized.astype(np.float32) / 255.0
+input_data = frame_resized.astype(np.int8)
 # Agregar una dimensión para representar el lote (batch)
 input_data = np.expand_dims(input_data, axis=0)
 print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
