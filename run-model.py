@@ -109,6 +109,11 @@ print('output_data')
 print(output_data)
 print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 
+print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
+print('output_details[0][shape][2]')
+print(output_details[0]['shape'][2])
+print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
+
 # 
 bb_dict = {}
 for i in range(output_details[0]['shape'][2]):
