@@ -90,6 +90,10 @@ frame_resized = cv2.resize(frame_rgb, (width, height))
 input_data = frame_resized.astype(np.int8)
 # Agregar una dimensión para representar el lote (batch)
 input_data = np.expand_dims(input_data, axis=0)
+print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
+print('input_data')
+print(input_data)
+print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 
 
 # Perform the actual detection by running the model with the image as input
