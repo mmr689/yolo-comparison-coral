@@ -67,7 +67,10 @@ model_path = os.path.join("models", project, model_name)
 interpreter = Interpreter(model_path,
   experimental_delegates=[load_delegate('libedgetpu.so.1')])
 interpreter.allocate_tensors()
+print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
+print('INTERPRETER')
 print(interpreter)
+print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 gpio.write(False)
 
 # Get model details
