@@ -86,8 +86,8 @@ print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 
 
 frame_resized = cv2.resize(frame_rgb, (width, height))
-# Normalizar los valores de píxeles a FLOAT32
-input_data = frame_resized#.astype(np.int8)
+# Normalizar los valores de píxeles a INT8
+input_data = frame_resized.astype(np.int8)
 # Agregar una dimensión para representar el lote (batch)
 input_data = np.expand_dims(input_data, axis=0)
 print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
@@ -118,6 +118,10 @@ print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 bb_dict = {}
 for i in range(output_details[0]['shape'][2]):
     probs = output_data[0][4:, i].flatten() # CONF LABELS
+    print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
+    print('probs')
+    print(probs)
+    print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
     if np.max(probs) > 0.25:
         x, y, w, h = output_data[0][:4, i].flatten() # COORDS
         print(i, np.max(probs), np.argmax(probs), (x, y, w, h))
