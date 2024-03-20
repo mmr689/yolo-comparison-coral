@@ -136,6 +136,7 @@ for i in range(output_details[0]['shape'][2]):
         tupla_fp32 = int8_to_fp32((x, y, w, h))
         print("Tupla en int8:", (x, y, w, h))
         print("Tupla en FP32:", tupla_fp32)
+        x,y,w,h = tupla_fp32
 
         # Coordenadas del punto (ejemplo)
         x = int(x * frame.shape[1])
