@@ -131,7 +131,6 @@ for i in range(output_details[0]['shape'][2]):
         label = np.argmax(probs)
         confi = (np.max(probs)+128)/255
         print(i, 'label:',label, 'conf:',confi, 'coords:',(x, y, w, h))
-        print('cero', output_data[0][4, i])
 
         # Coordenadas del punto (ejemplo)
         x = int(x * frame.shape[1])
@@ -146,11 +145,11 @@ for i in range(output_details[0]['shape'][2]):
         y_arriba = y - height // 2
               
         # Guardar
-        if np.argmax(probs) not in bb_dict:
+        if label not in bb_dict:
             print('Añado ', np.argmax(probs), label)
-            bb_dict[np.argmax(probs)] = [(x_izquierda, y_arriba, x_izquierda + width, y_arriba + height, np.max(probs))]
+            bb_dict[label] = [(x_izquierda, y_arriba, x_izquierda + width, y_arriba + height, confi)]
         else:
-            bb_dict[np.argmax(probs)].append((x_izquierda, y_arriba, x_izquierda + width, y_arriba + height, np.max(probs)))
+            bb_dict[label].append((x_izquierda, y_arriba, x_izquierda + width, y_arriba + height, confi))
 
 # Aplicamos NMS
 rectangulos_eliminados = []
