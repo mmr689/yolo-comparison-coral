@@ -128,9 +128,9 @@ for i in range(output_details[0]['shape'][2]):
         w = (w+128)/255
         h = (h+128)/255
 
-        label = np.max(probs)
-        confi = (np.argmax(probs)+128)/255
-        print(i, 'label:',label, 'conf:',confi, (x, y, w, h))
+        label = np.argmax(probs)
+        confi = (np.max(probs)+128)/255
+        print(i, 'label:',label, 'conf:',confi, 'coords:',(x, y, w, h))
         print('cero', output_data[0][4, i])
 
         # Coordenadas del punto (ejemplo)
