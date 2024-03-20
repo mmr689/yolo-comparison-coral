@@ -87,7 +87,7 @@ print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 
 resized_img = cv2.resize(frame_rgb, (width, height))
 # Normalizar los valores de píxeles a INT8
-norm_img = resized_img.astype(np.int32)
+norm_img = resized_img.astype(np.int8)
 # Agregar una dimensión para representar el lote (batch)
 batched_img = np.expand_dims(norm_img, axis=0)
 print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
