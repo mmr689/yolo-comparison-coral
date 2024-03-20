@@ -147,6 +147,7 @@ for i in range(output_details[0]['shape'][2]):
               
         # Guardar
         if np.argmax(probs) not in bb_dict:
+            print('Añado ', np.argmax(probs), label)
             bb_dict[np.argmax(probs)] = [(x_izquierda, y_arriba, x_izquierda + width, y_arriba + height, np.max(probs))]
         else:
             bb_dict[np.argmax(probs)].append((x_izquierda, y_arriba, x_izquierda + width, y_arriba + height, np.max(probs)))
