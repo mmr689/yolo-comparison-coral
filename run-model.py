@@ -44,6 +44,17 @@ def eliminar_solapamientos(lista_rectangulos):
         i += 1
     return rectangulos_eliminados
 
+def int8_to_fp32(tupla_int8):
+    # Valores mínimos y máximos para int8 y FP32
+    int8_min = -128
+    int8_max = 127
+    fp32_min = -1.0
+    fp32_max = 1.0
+
+    # Convertir los valores int8 a FP32
+    tupla_fp32 = tuple((valor_int8 - int8_min) * (fp32_max - fp32_min) / (int8_max - int8_min) + fp32_min for valor_int8 in tupla_int8)
+    
+    return tupla_fp32
 
 project = 'COCO'
 model_name = 'yolov8n'
@@ -121,6 +132,10 @@ for i in range(output_details[0]['shape'][2]):
     if np.max(probs) > 0.25:
         x, y, w, h = output_data[0][:4, i].flatten() # COORDS
         print(i, 'label:',np.max(probs), 'conf:',np.argmax(probs), (x, y, w, h))
+
+        tupla_fp32 = int8_to_fp32((x, y, w, h))
+        print("Tupla en int8:", (x, y, w, h))
+        print("Tupla en FP32:", tupla_fp32)
 
         # Coordenadas del punto (ejemplo)
         x = int(x * frame.shape[1])
