@@ -44,17 +44,7 @@ def eliminar_solapamientos(lista_rectangulos):
         i += 1
     return rectangulos_eliminados
 
-def int8_to_positive_fp32(tupla_int8):
-    # Valores mínimos y máximos para int8 y FP32
-    int8_min = -128
-    int8_max = 127
-    fp32_min = 0.0
-    fp32_max = 1.0
 
-    # Convertir los valores int8 a FP32
-    tupla_fp32 = tuple((valor_int8 - int8_min) * (fp32_max - fp32_min) / (int8_max - int8_min) + fp32_min for valor_int8 in tupla_int8)
-    
-    return tupla_fp32
 
 project = 'COCO'
 model_name = 'yolov8n'
@@ -137,7 +127,10 @@ for i in range(output_details[0]['shape'][2]):
         y = (y+128)/255
         w = (w+128)/255
         h = (h+128)/255
-        print(i, 'label:',np.max(probs), 'conf:',np.argmax(probs), (x, y, w, h))
+
+        label = (np.max(probs)+128)/255
+        confi = (np.argmax(probs)+128)/255
+        print(i, 'label:',label, 'conf:',confi, (x, y, w, h))
 
         # Coordenadas del punto (ejemplo)
         x = int(x * frame.shape[1])
@@ -186,7 +179,7 @@ for key,vals in bb_dict.items():
 
 # Guardar la imagen resultante con rectángulos dibujados
 print(rectangulos_eliminados)
-output_path = f'results/{project}/{img_name}-{model_name}zzzz3.jpg'
+output_path = f'results/{project}/{img_name}-{model_name}zzzz4.jpg'
 cv2.imwrite(output_path, frame)
 gpio.close()
 
