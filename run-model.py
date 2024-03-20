@@ -180,7 +180,7 @@ for key,vals in bb_dict.items():
 
 # Guardar la imagen resultante con rectángulos dibujados
 print(rectangulos_eliminados)
-output_path = f'results/{project}/{img_name}-{model_name}zzzz4.jpg'
+output_path = f'results/{project}/{img_name}-{model_name}zzzz5.jpg'
 cv2.imwrite(output_path, frame)
 gpio.close()
 
