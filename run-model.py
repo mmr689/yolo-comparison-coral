@@ -85,21 +85,21 @@ print(output_details)
 print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 
 
-frame_resized = cv2.resize(frame_rgb, (width, height))
+resized_img = cv2.resize(frame_rgb, (width, height))
 # Normalizar los valores de píxeles a INT8
-input_data = frame_resized.astype(np.int8)
+norm_img = resized_img.astype(np.int8)
 # Agregar una dimensión para representar el lote (batch)
-input_data = np.expand_dims(input_data, axis=0)
+batched_img = np.expand_dims(norm_img, axis=0)
 print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 print('input_data')
-print(input_data)
+print(batched_img)
 print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 
 
 # Perform the actual detection by running the model with the image as input
 gpio.write(True)
 start_time = time.time()
-interpreter.set_tensor(input_details[0]['index'],input_data)
+interpreter.set_tensor(input_details[0]['index'], batched_img)
 interpreter.invoke()
 output_data = interpreter.get_tensor(output_details[0]['index'])
 gpio.write(False)
@@ -125,10 +125,10 @@ for i in range(output_details[0]['shape'][2]):
         # Coordenadas del punto (ejemplo)
         x = int(x * frame.shape[1])
         y = int(y * frame.shape[0])
-
         # Dimensiones del rectángulo
         width = int(w * frame.shape[1])
         height = int(h * frame.shape[0])
+        print('Redim: ', (x, y, width, height), ' <> ', frame.shape)
 
         # Calcular las coordenadas del vértice superior izquierdo del rectángulo
         x_izquierda = x - width // 2
