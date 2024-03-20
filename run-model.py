@@ -119,7 +119,7 @@ print(' +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ')
 bb_dict = {}
 for i in range(output_details[0]['shape'][2]):
     probs = output_data[0][4:, i].flatten() # CONF LABELS
-    if np.max(probs) > 0.25:
+    if (np.argmax(probs)+128)/255 > 0.25:
         x, y, w, h = output_data[0][:4, i].flatten() # COORDS
         print(i, 'label:',np.max(probs), 'conf:',np.argmax(probs), (x, y, w, h))
 
@@ -128,9 +128,10 @@ for i in range(output_details[0]['shape'][2]):
         w = (w+128)/255
         h = (h+128)/255
 
-        label = (np.max(probs)+128)/255
+        label = np.max(probs)
         confi = (np.argmax(probs)+128)/255
         print(i, 'label:',label, 'conf:',confi, (x, y, w, h))
+        print('cero', output_data[0][4, i])
 
         # Coordenadas del punto (ejemplo)
         x = int(x * frame.shape[1])
